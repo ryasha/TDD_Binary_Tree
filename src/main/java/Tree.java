@@ -1,60 +1,56 @@
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by ryasha on 07.03.17.
  */
-public class Tree {
+public class Tree implements Cloneable {
 
     public enum TraverseType {
         INORDER,
         PREORDER,
-        POSTORDER;
+        POSTORDER
     }
 
     @Getter
+    @Setter
     private Node root;
 
-    public Tree() {
+    Tree() {
         this.root = null;
     }
 
-    public Tree(int[] values) {
+    Tree(int[] values) {
         for(int value : values) {
             insert(value);
         }
     }
 
-    public void insert(int data) {
-        root = insert(root, data, null);
+    void insert(int data) {
+        root = insert(root, data);
     }
 
-    private Node insert(Node current, int data, Node parent) {
+    private Node insert(Node current, int data) {
         if (current == null) {
             current = new Node();
             current.setData(data);
             current.setLeft(null);
             current.setRight(null);
-            current.setParent(parent);
         } else if (data < current.getData()) {
-            current.setLeft(insert(current.getLeft(), data, current));
+            current.setLeft(insert(current.getLeft(), data));
         } else {
-            current.setRight(insert(current.getRight(), data, current));
+            current.setRight(insert(current.getRight(), data));
         }
         return current;
     }
 
-    public Node find(int data) {
-        return find(root, data);
-    }
-
-    private Node find(Node current, int data) {
+    public Node find(Node current, int data) {
         if (current == null)
             return null;
         if (current.getData() == data)
             return current;
-        return find(
-                data < current.getData() ? current.getLeft()
-                        : current.getRight(), data);
+        return find(data < current.getData() ?
+                current.getLeft() : current.getRight(), data);
     }
 
     public Node findMin(Node root) {
@@ -91,31 +87,48 @@ public class Tree {
         return root;
     }
 
-
-    public void traverseTree(TraverseType traverseType) {
-        traverseTree(root, traverseType);
-        System.out.println();
-    }
-
-    private void traverseTree(Node current, TraverseType traverseType) {
+    void traverseTree(Node current, TraverseType traverseType) {
         if (current == null)
             return;
         switch (traverseType) {
             case INORDER:
                 traverseTree(current.getLeft(), traverseType);
-                System.out.println(current.getData() + " ");
+                System.out.println(current.getData());
                 traverseTree(current.getRight(), traverseType);
                 break;
             case PREORDER:
-                System.out.println(current.getData() + " ");
+                System.out.println(current.getData());
                 traverseTree(current.getLeft(), traverseType);
                 traverseTree(current.getRight(), traverseType);
                 break;
             case POSTORDER:
                 traverseTree(current.getLeft(), traverseType);
                 traverseTree(current.getRight(), traverseType);
-                System.out.println(current.getData() + " ");
+                System.out.println(current.getData());
                 break;
         }
+    }
+
+    public static boolean equals(Node root1, Node root2) {
+        if (root1 == root2)
+            return true;
+        if (root1 == null || root2 == null)
+            return false;
+        if (!root1.equals(root2))
+            return false;
+
+        if (!equals(root1.getLeft(), root2.getLeft()))
+            return false;
+        if (!equals(root1.getRight(), root2.getRight()))
+            return false;
+        return true;
+    }
+
+    protected Tree clone() {
+        if(this.root == null)
+            return null;
+        Tree tree = new Tree();
+        tree.setRoot(this.root.clone());
+        return tree;
     }
 }

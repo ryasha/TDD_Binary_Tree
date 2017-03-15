@@ -14,6 +14,18 @@ public class Application {
             return;
         }
 
+        Tree treeTest = tree.clone();
+        System.out.println("Deleting a nonexistent node (node \"20\"):");
+        tree.delete(20);
+        if (Tree.equals(tree.getRoot(), treeTest.getRoot())) {
+            System.out.println("Deleting a nonexistent node \"20\": tree remains the same");
+        }
+        else {
+            System.out.println("Deleting a nonexistent node \"20\": failure");
+            return;
+        }
+
+
         System.out.println("Deleting root (node \"9\"):");
         tree.delete(9);
         if (tree.getRoot().getData() == 10)
@@ -25,7 +37,7 @@ public class Application {
 
         System.out.println("Deleting root (node \"19\"):");
         tree.delete(19);
-        if (tree.find(16).getRight() == null)
+        if (tree.find(tree.getRoot(), 16).getRight() == null)
             System.out.println("Deleting node \"19\": success");
         else {
             System.out.println("Deleting node \"19\": failure");
@@ -34,7 +46,7 @@ public class Application {
 
         System.out.println("Deleting root (node \"4\"):");
         tree.delete(4);
-        if (tree.find(6).getLeft() == null)
+        if (tree.find(tree.getRoot(), 6).getLeft() == null)
             System.out.println("Deleting node \"4\": success");
         else {
             System.out.println("Deleting node \"4\": failure");
