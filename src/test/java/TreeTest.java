@@ -95,7 +95,7 @@ public class TreeTest {
         tree2 = new Tree(values);
         Assert.assertTrue(Tree.equals(tree1.getRoot(), tree2.getRoot()), "Trees must be equal");
 
-        values[6] = 20;
+        values[2] = 15;
         tree2 = new Tree(values);
         Assert.assertFalse(Tree.equals(tree1.getRoot(), tree2.getRoot()), "Trees must not be equal");
 

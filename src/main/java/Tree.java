@@ -35,10 +35,7 @@ public class Tree implements Cloneable {
 
     private Node insert(Node current, int data) {
         if (current == null) {
-            current = new Node();
-            current.setData(data);
-            current.setLeft(null);
-            current.setRight(null);
+            current = new Node(data);
         } else if (data < current.getData()) {
             current.setLeft(insert(current.getLeft(), data));
         } else {
@@ -47,7 +44,7 @@ public class Tree implements Cloneable {
         return current;
     }
 
-    public Node find(Node current, int data) {
+    Node find(Node current, int data) {
         if (current == null)
             return null;
         if (current.getData() == data)
@@ -56,7 +53,7 @@ public class Tree implements Cloneable {
                 current.getLeft() : current.getRight(), data);
     }
 
-    public Node findMin(Node root) {
+    Node findMin(Node root) {
         Node min = root;
         if (min == null) return null;
         while (min.getLeft() != null) {
@@ -65,11 +62,11 @@ public class Tree implements Cloneable {
         return min;
     }
 
-    public void delete(int data) {
+    void delete(int data) {
         root = delete(root, data);
     }
 
-    public Node delete(Node startNode, int data) {
+    private Node delete(Node startNode, int data) {
         Node root = startNode;
 
         if (root == null)
@@ -90,29 +87,31 @@ public class Tree implements Cloneable {
         return root;
     }
 
-    void traverseTree(Node current, TraverseType traverseType) {
+    static List<Integer> traverseTree(Node current, TraverseType traverseType) {
+        List<Integer> nodeVal = new ArrayList<>();
         if (current == null)
-            return;
+            return nodeVal;
         switch (traverseType) {
             case INORDER:
-                traverseTree(current.getLeft(), traverseType);
-                System.out.println(current.getData());
-                traverseTree(current.getRight(), traverseType);
+                nodeVal.addAll(traverseTree(current.getLeft(), traverseType));
+                nodeVal.add(current.getData());
+                nodeVal.addAll(traverseTree(current.getRight(), traverseType));
                 break;
             case PREORDER:
-                System.out.println(current.getData());
-                traverseTree(current.getLeft(), traverseType);
-                traverseTree(current.getRight(), traverseType);
+                nodeVal.add(current.getData());
+                nodeVal.addAll(traverseTree(current.getLeft(), traverseType));
+                nodeVal.addAll(traverseTree(current.getRight(), traverseType));
                 break;
             case POSTORDER:
-                traverseTree(current.getLeft(), traverseType);
-                traverseTree(current.getRight(), traverseType);
-                System.out.println(current.getData());
+                nodeVal.addAll(traverseTree(current.getLeft(), traverseType));
+                nodeVal.addAll(traverseTree(current.getRight(), traverseType));
+                nodeVal.add(current.getData());
                 break;
         }
+        return nodeVal;
     }
 
-    public static boolean equals(Node root1, Node root2) {
+    static boolean equals(Node root1, Node root2) {
         if (root1 == root2)
             return true;
         if (root1 == null || root2 == null)
@@ -120,11 +119,10 @@ public class Tree implements Cloneable {
         if (!root1.equals(root2))
             return false;
 
-        if (!equals(root1.getLeft(), root2.getLeft()))
-            return false;
-        if (!equals(root1.getRight(), root2.getRight()))
-            return false;
-        return true;
+        List<Integer> tree1 = Tree.traverseTree(root1, TraverseType.INORDER);
+        List<Integer> tree2 = Tree.traverseTree(root2, TraverseType.INORDER);
+
+        return tree1.equals(tree2);
     }
 
     protected Tree clone() {
@@ -135,24 +133,3 @@ public class Tree implements Cloneable {
         return tree;
     }
 }
-    /*void traverseTree(Node current, TraverseType traverseType) {
-        if (current == null)
-            return;
-        switch (traverseType) {
-            case INORDER:
-                traverseTree(current.getLeft(), traverseType);
-                System.out.println(current.getData());
-                traverseTree(current.getRight(), traverseType);
-                break;
-            case PREORDER:
-                System.out.println(current.getData());
-                traverseTree(current.getLeft(), traverseType);
-                traverseTree(current.getRight(), traverseType);
-                break;
-            case POSTORDER:
-                traverseTree(current.getLeft(), traverseType);
-                traverseTree(current.getRight(), traverseType);
-                System.out.println(current.getData());
-                break;
-        }
-    }*/

@@ -9,13 +9,18 @@ public class Node implements Cloneable {
     private Node left;
     private Node right;
 
+    Node(int data) {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+
     boolean equals(Node node) {
         return this.data == node.getData();
     }
 
     protected Node clone() {
-        Node node = new Node();
-        node.setData(this.data);
+        Node node = new Node(this.data);
         if(this.left != null)
             node.setLeft(this.left.clone());
         else
