@@ -1,6 +1,9 @@
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by ryasha on 07.03.17.
  */
@@ -132,3 +135,24 @@ public class Tree implements Cloneable {
         return tree;
     }
 }
+    /*void traverseTree(Node current, TraverseType traverseType) {
+        if (current == null)
+            return;
+        switch (traverseType) {
+            case INORDER:
+                traverseTree(current.getLeft(), traverseType);
+                System.out.println(current.getData());
+                traverseTree(current.getRight(), traverseType);
+                break;
+            case PREORDER:
+                System.out.println(current.getData());
+                traverseTree(current.getLeft(), traverseType);
+                traverseTree(current.getRight(), traverseType);
+                break;
+            case POSTORDER:
+                traverseTree(current.getLeft(), traverseType);
+                traverseTree(current.getRight(), traverseType);
+                System.out.println(current.getData());
+                break;
+        }
+    }*/
