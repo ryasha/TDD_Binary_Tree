@@ -1,3 +1,5 @@
+package ru.test;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,17 +21,17 @@ public class Tree implements Cloneable {
     @Setter
     private Node root;
 
-    Tree() {
+    public Tree() {
         this.root = null;
     }
 
-    Tree(int[] values) {
+    public Tree(int[] values) {
         for(int value : values) {
             insert(value);
         }
     }
 
-    void insert(int data) {
+    public void insert(int data) {
         root = insert(root, data);
     }
 
@@ -44,7 +46,7 @@ public class Tree implements Cloneable {
         return current;
     }
 
-    Node find(Node current, int data) {
+    public Node find(Node current, int data) {
         if (current == null)
             return null;
         if (current.getData() == data)
@@ -53,7 +55,7 @@ public class Tree implements Cloneable {
                 current.getLeft() : current.getRight(), data);
     }
 
-    Node findMin(Node root) {
+    public Node findMin(Node root) {
         Node min = root;
         if (min == null) return null;
         while (min.getLeft() != null) {
@@ -62,7 +64,7 @@ public class Tree implements Cloneable {
         return min;
     }
 
-    void delete(int data) {
+    public void delete(int data) {
         root = delete(root, data);
     }
 
@@ -87,7 +89,7 @@ public class Tree implements Cloneable {
         return root;
     }
 
-    static List<Integer> traverseTree(Node current, TraverseType traverseType) {
+    public static List<Integer> traverseTree(Node current, TraverseType traverseType) {
         List<Integer> nodeVal = new ArrayList<>();
         if (current == null)
             return nodeVal;
@@ -111,7 +113,7 @@ public class Tree implements Cloneable {
         return nodeVal;
     }
 
-    static boolean equals(Node root1, Node root2) {
+    public static boolean equals(Node root1, Node root2) {
         if (root1 == root2)
             return true;
         if (root1 == null || root2 == null)
@@ -125,7 +127,7 @@ public class Tree implements Cloneable {
         return tree1.equals(tree2);
     }
 
-    protected Tree clone() {
+    public Tree clone() {
         if(this.root == null)
             return null;
         Tree tree = new Tree();

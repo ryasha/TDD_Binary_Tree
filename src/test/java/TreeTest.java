@@ -1,6 +1,7 @@
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
+import ru.test.Tree;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +38,7 @@ public class TreeTest {
         Assert.assertEquals(tree.find(tree.getRoot(), 16).getLeft().getData(), 10,
                 "The left son of the node 16 must be 10");
         Assert.assertEquals(tree.find(tree.getRoot(), 16).getRight().getData(), 19,
-                "The left son of the node 16 must be 19");
+                "The right son of the node 16 must be 19");
 
         Reporter.log("Test checkOfAllNodes complete");
     }
@@ -62,13 +63,13 @@ public class TreeTest {
         List<Integer> preorderList = new ArrayList<>(Arrays.asList(9, 6, 4, 7, 16, 10, 19));
         List<Integer> postorderList = new ArrayList<>(Arrays.asList(4, 7, 6, 10, 19, 16, 9));
 
-        List<Integer> inorderCheck = tree.traverseTree(tree.getRoot(), Tree.TraverseType.INORDER);
+        List<Integer> inorderCheck = Tree.traverseTree(tree.getRoot(), Tree.TraverseType.INORDER);
         Assert.assertEquals(inorderCheck, inorderList, "Inorder lists must be equal");
 
-        List<Integer> preorderCheck = tree.traverseTree(tree.getRoot(), Tree.TraverseType.PREORDER);
+        List<Integer> preorderCheck = Tree.traverseTree(tree.getRoot(), Tree.TraverseType.PREORDER);
         Assert.assertEquals(preorderCheck, preorderList, "Preorder lists must be equal");
 
-        List<Integer> postorderCheck = tree.traverseTree(tree.getRoot(), Tree.TraverseType.POSTORDER);
+        List<Integer> postorderCheck = Tree.traverseTree(tree.getRoot(), Tree.TraverseType.POSTORDER);
         Assert.assertEquals(postorderCheck, postorderList, "Postorder lists must be equal");
 
         Reporter.log("Test traverseTest complete");
@@ -118,10 +119,10 @@ public class TreeTest {
 
         tree.delete(19);
         Assert.assertEquals(tree.find(tree.getRoot(), 16).getRight(), null,
-                "The left son of the node 16 must be null");
+                "The right son of the node 16 must be null");
 
         tree.delete(4);
-        Assert.assertEquals(tree.find(tree.getRoot(), 16).getRight(), null,
+        Assert.assertEquals(tree.find(tree.getRoot(), 6).getRight(), null,
                 "The left son of the node 6 must be null");
 
         Reporter.log("Test deletingTest complete");

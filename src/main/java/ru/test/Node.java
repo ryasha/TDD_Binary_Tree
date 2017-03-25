@@ -1,3 +1,5 @@
+package ru.test;
+
 import lombok.Data;
 
 /**
